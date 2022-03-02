@@ -1,3 +1,4 @@
+import 'package:clima_weather_app/screens/location_screen.dart';
 import 'package:clima_weather_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class CityScreen extends StatefulWidget {
 }
 
 class _CityScreenState extends State<CityScreen> {
+  TextEditingController textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +24,10 @@ class _CityScreenState extends State<CityScreen> {
         constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
-            children: <Widget>[
+            children: [
               Align(
                 alignment: Alignment.topLeft,
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {},
                   child: Icon(
                     Icons.arrow_back_ios,
@@ -33,12 +35,38 @@ class _CityScreenState extends State<CityScreen> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(20.0),
-                child: null,
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: TextField(
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide.none),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Enter city name',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    icon: Icon(
+                      Icons.location_city,
+                      size: 50.0,
+                    ),
+                  ),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
-              FlatButton(
-                onPressed: () {},
+              TextButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => LocationScreen(
+                              cityNewName: textEditingController,
+                            ))),
+                style: ButtonStyle(
+                    overlayColor: MaterialStateColor.resolveWith((states) =>
+                        states.contains(MaterialState.hovered)
+                            ? Colors.red
+                            : Colors.yellow)),
                 child: Text(
                   'Get Weather',
                   style: kButtonTextStyle,
